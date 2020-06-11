@@ -1,4 +1,4 @@
-package com.techprimers.springbootwebsocketexample.model;
+package com.tech.spring.example.model;
 
 public class UserResponse {
     String content;

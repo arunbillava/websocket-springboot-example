@@ -1,4 +1,4 @@
-package com.techprimers.springbootwebsocketexample.controllers;
+package com.tech.spring.example.controllers;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

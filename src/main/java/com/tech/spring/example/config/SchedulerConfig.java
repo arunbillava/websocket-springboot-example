@@ -1,11 +1,12 @@
-package com.techprimers.springbootwebsocketexample.config;
+package com.tech.spring.example.config;
 
-import com.techprimers.springbootwebsocketexample.model.UserResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
+
+import com.tech.spring.example.model.UserResponse;
 
 @EnableScheduling
 @Configuration
