@@ -17,7 +17,7 @@ import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.listener.ErrorHandler;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
 
-import com.tech.spring.example.model.User;
+import com.tech.spring.example.model.UserRequest;
 
 @EnableKafka
 @Configuration
@@ -50,13 +50,13 @@ public class KafkaConfig {
 	
 	@Bean
     public ConcurrentKafkaListenerContainerFactory<String, String> kafkaListenerContainerFactory() {
-        ConcurrentKafkaListenerContainerFactory<String, String> factory = new ConcurrentKafkaListenerContainerFactory();
+        ConcurrentKafkaListenerContainerFactory<String, String> factory = new ConcurrentKafkaListenerContainerFactory<String, String>();
         factory.setConsumerFactory(consumerFactory());
         return factory;
     }
 	
 	   @Bean
-	    public ConsumerFactory<String, User> userConsumerFactory() {
+	    public ConsumerFactory<String, UserRequest> userConsumerFactory() {
 	        Map<String, Object> config = new HashMap<>();
 
 	        config.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG,bootstrapSever);
@@ -64,16 +64,15 @@ public class KafkaConfig {
 	        config.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
 	        config.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
 	        return new DefaultKafkaConsumerFactory<>(config, new StringDeserializer(),
-	                new JsonDeserializer<>(User.class));
+	                new JsonDeserializer<>(UserRequest.class));
 	    }
 
 	    @Bean
-	    public ConcurrentKafkaListenerContainerFactory<String, User> userKafkaListenerFactory() {
-	        ConcurrentKafkaListenerContainerFactory<String, User> factory = new ConcurrentKafkaListenerContainerFactory<>();
+	    public ConcurrentKafkaListenerContainerFactory<String, UserRequest> userKafkaListenerFactory() {
+	        ConcurrentKafkaListenerContainerFactory<String, UserRequest> factory = new ConcurrentKafkaListenerContainerFactory<>();
 	        factory.setConsumerFactory(userConsumerFactory());
-	        factory.getContainerProperties().setErrorHandler(new ErrorHandler() {
+	        factory.setErrorHandler(new ErrorHandler() {
 				
-				@Override
 				public void handle(Exception thrownException, ConsumerRecord<?, ?> data) {
 					System.out.println(thrownException.getMessage());
 					throw new SerializationException(thrownException.getMessage());

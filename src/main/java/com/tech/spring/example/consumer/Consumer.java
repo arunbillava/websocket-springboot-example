@@ -5,7 +5,7 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Component;
 
-import com.tech.spring.example.model.User;
+import com.tech.spring.example.model.UserRequest;
 
 @Component
 public class Consumer {
@@ -13,15 +13,15 @@ public class Consumer {
 	@Autowired
 	SimpMessagingTemplate template;
 
-	@KafkaListener(topics = "Kafka_listner_ex", group = "kafka_test_group")
+	@KafkaListener(topics = {"${kafka_listner_string}"}, groupId = "${group_id}")
 	public void consume(String message){
 		System.out.println("received: "+message);
 		template.convertAndSend("/topic/user",message);
 	}
 	
-	@KafkaListener(topics = "Kafka_listner_json", group = "kafka_user_group",
+	@KafkaListener(topics = {"${kafka_listner_json}"}, groupId = "${user_group_id}",
             containerFactory = "userKafkaListenerFactory")
-    public void consumeJson(User user) {
+    public void consumeJson(UserRequest user) {
         System.out.println("Received user: " + user.getName());
     }
 }

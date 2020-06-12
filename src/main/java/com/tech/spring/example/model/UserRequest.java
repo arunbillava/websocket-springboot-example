@@ -1,13 +1,13 @@
 package com.tech.spring.example.model;
 
-public class User {
+public class UserRequest {
 
     private String name;
 
-    public User() {
+    public UserRequest() {
     }
 
-    public User(String name) {
+    public UserRequest(String name) {
         this.name = name;
     }
 
